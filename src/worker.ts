@@ -8,7 +8,7 @@ const ASSETS_TTL = 60 * 60 * 24; // 24 hours
 async function fetchAsset(path: string, modifyUrls: boolean = false): Promise<Response> {
   const assetUrl = `https://compress-to-url.dobuki.net/example/${path}`;
   const cacheKey = new Request(assetUrl).url;
-  const cache = await caches.open("onthefly");
+  const cache = await caches.open(CACHE_NAME);
 
   let response = await cache.match(cacheKey);
   if (response) {
