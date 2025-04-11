@@ -7,9 +7,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["webworker", "dom", "dom.iterable"]
+    "lib": ["webworker", "dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx" // For React JSX support
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "example/**/*"],
   "exclude": ["node_modules"]
 }
