@@ -1,16 +1,17 @@
 {
-  "name": "promo-codes-worker",
+  "name": "webpage-onthefly",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "wrangler dev src/index.ts --config wrangler.dev.toml",
-    "deploy": "wrangler deploy",
-    "build": "bun i && tsc"
+    "build": "tsc",
+    "dev": "wrangler dev",
+    "deploy": "wrangler publish"
+  },
+  "dependencies": {
+    "compress-to-url": "^1.0.4"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "latest",
-    "typescript": "latest",
-    "wrangler": "latest"
-  },
-  "dependencies": {}
+    "@cloudflare/workers-types": "^4.20250410.0",
+    "typescript": "^5.0.0",
+    "wrangler": "^4.10.0"
+  }
 }

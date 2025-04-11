@@ -1,4 +1,4 @@
-name = "cloudflare-worker"
-compatibility_date = "2025-03-21"
-main = "src/index.ts"
-compatibility_flags = ["nodejs_compat"]
+name = "webpage-onthefly"
+main = "src/worker.ts"
+compatibility_date = "2025-04-11"
+account_id = "1fe1ef92444f52ef8d7ff09c175d034e"
