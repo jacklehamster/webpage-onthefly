@@ -8,6 +8,11 @@ export default {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
     const pathname = url.pathname;
+
+    if (pathname === "/favicon.ico") {
+      return Response.redirect("https://jacklehamster.github.io/webpage-onthefly/icon.png");
+    }
+
     const encodedHtml = url.searchParams.get('u');
     const edit = url.searchParams.get('edit') === '1';
 
