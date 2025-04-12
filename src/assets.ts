@@ -1,6 +1,6 @@
 const CACHE_NAME = 'compress-to-url-cache';
 const ASSETS_TTL = 60 * 60 * 24; // 24 hours
-const VERSION = "1.0.4";
+const VERSION = "1.1.4";
 
 async function clearCache(path: string) {
   const cache = await caches.open(CACHE_NAME);
@@ -44,10 +44,8 @@ export async function fetchAsset(path: string, isEditMode: boolean): Promise<Res
     content = content
       .replace(/src="dist\/index\.js"/, 'src="/dist/index.js"')
       .replace(/href="styles\.css"/, 'href="/styles.css"');
-    if (isEditMode) {
-      console.log('Injecting SCRAPER_URL for edit mode');
-      content = content.replace('</head>', `<script type='text/javascript'>window.SCRAPER_URL = '/scrape';</script></head>`);
-    }
+    console.log('Injecting SCRAPER_URL for edit mode');
+    content = content.replace('</head>', `<script type='text/javascript'>window.SCRAPER_URL = '/scrape';</script></head>`);
   }
 
   const headers = new Headers({

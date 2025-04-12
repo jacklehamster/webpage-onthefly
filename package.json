@@ -7,7 +7,7 @@
     "deploy": "wrangler publish"
   },
   "dependencies": {
-    "compress-to-url": "^1.0.7",
+    "compress-to-url": "^1.0.9",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
