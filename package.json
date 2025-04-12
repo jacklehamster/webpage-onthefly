@@ -7,15 +7,15 @@
     "deploy": "wrangler publish"
   },
   "dependencies": {
-    "compress-to-url": "^1.0.4",
+    "compress-to-url": "^1.0.6",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250410.0",
+    "@cloudflare/workers-types": "^4.20250412.0",
     "typescript": "^5.0.0",
     "wrangler": "^4.10.0",
-    "@types/react": "^19.1.0",
+    "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2"
   }
 }
