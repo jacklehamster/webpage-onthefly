@@ -1,9 +1,9 @@
 const CACHE_NAME = 'compress-to-url-cache';
 const ASSETS_TTL = 60 * 60 * 24; // 24 hours
-const VERSION = "1.1.4";
+const VERSION = "1.1.6";
 
 async function clearCache(path: string) {
-  const cache = await caches.open(CACHE_NAME);
+  const cache = await caches.open(CACHE_NAME + VERSION);
   const cacheKey = new Request(`https://compress-to-url.dobuki.net/example/${path}?v=${VERSION}`).url;
   await cache.delete(cacheKey);
   console.log(`Cleared cache for ${path}`);
@@ -12,7 +12,7 @@ async function clearCache(path: string) {
 export async function fetchAsset(path: string, isEditMode: boolean): Promise<Response> {
   const assetUrl = `https://compress-to-url.dobuki.net/example/${path}?v=${VERSION}`;
   const cacheKey = new Request(assetUrl).url;
-  const cache = await caches.open(CACHE_NAME);
+  const cache = await caches.open(CACHE_NAME + VERSION);
 
   // Check cache
   let response = await cache.match(cacheKey);
