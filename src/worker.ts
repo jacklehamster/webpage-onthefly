@@ -71,11 +71,11 @@ export default {
 
     // Serve static assets
     if (pathname === '/dist/index.js') {
-      return fetchAsset('dist/index.js', edit);
+      return fetchAsset('dist/index.js', edit, url.origin);
     } else if (pathname === '/styles.css') {
-      return fetchAsset('styles.css', edit);
+      return fetchAsset('styles.css', edit, url.origin);
     } else if (pathname === '/' || pathname === '/index.html') {
-      return fetchAsset('index.html', edit);
+      return fetchAsset('index.html', edit, url.origin);
     }
 
     return new Response('Not Found', {
