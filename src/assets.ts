@@ -2,7 +2,7 @@ import packageJson from '../package.json';
 
 const CACHE_NAME = 'compress-to-url-cache-';
 const ASSETS_TTL = 60 * 60 * 24; // 24 hours
-const VERSION = `1.0.1-${packageJson.dependencies['compress-to-url']}`;
+const VERSION = `1.0.3-${packageJson.dependencies['compress-to-url']}`;
 
 async function clearCache(path: string) {
   const cache = await caches.open(CACHE_NAME + VERSION);
@@ -34,22 +34,24 @@ export async function fetchAsset(path: string, isEditMode: boolean, hostname: st
     return new Response('Asset not found', { status: 404, headers: { 'Content-Type': 'text/plain' } });
   }
 
-  let content = await response.text();
   let mimeType = 'text/plain';
+  let content;
 
   if (path.endsWith('.png')) {
     mimeType = "image/png";
+    content = await response.blob();
   } else if (path.endsWith('.js')) {
     mimeType = 'application/javascript';
+    content = await response.text();
   } else if (path.endsWith('.css')) {
     mimeType = 'text/css';
+    content = await response.text();
   } else if (path.endsWith('.html')) {
     mimeType = 'text/html';
-    content = content
+    content = (await response.text())
       .replace(/src="dist\/index\.js"/, `src="/dist/index.js?${VERSION}"`)
       .replace(/href="styles\.css"/, `href="/styles.css?${VERSION}"`)
       .replaceAll(/https:\/\/compress-to-url.dobuki.net/g, `${hostname}`);
-    console.log(hostname);
     console.log('Injecting SCRAPER_URL for edit mode');
     content = content.replace('</head>', `<script type='text/javascript'>window.SCRAPER_URL = '/scrape';</script></head>`);
   }
