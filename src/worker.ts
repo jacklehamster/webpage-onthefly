@@ -3,6 +3,7 @@
 import { handleScrapeRequest } from './scraper';
 import { fetchAsset } from './assets';
 import { handleDecompression } from './decompression';
+import { hashString } from './utils';
 
 export default {
   async fetch(request: Request): Promise<Response> {
@@ -15,6 +16,21 @@ export default {
 
     const encodedHtml = url.searchParams.get('u');
     const edit = url.searchParams.get('edit') === '1';
+
+    if (encodedHtml && !edit) {
+      const cache = await caches.open("onthefly-pages");
+      const cacheKeyHash = await hashString(encodedHtml);
+      const cacheKey = new Request(`${url.origin}/cache/${cacheKeyHash}`, request);
+
+      let response = await cache.match(cacheKey);
+      if (!response) {
+        response = await handleDecompression(encodedHtml, url);
+        response = new Response(response.body, response); // Clone with headers
+        response.headers.set('Cache-Control', 'public, max-age=3600');
+        await cache.put(cacheKey, response.clone());
+      }
+      return response;
+    }
 
     // Handle scraper requests
     if (pathname === '/scrape') {

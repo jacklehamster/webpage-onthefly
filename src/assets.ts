@@ -1,6 +1,8 @@
-const CACHE_NAME = 'compress-to-url-cache';
+import packageJson from '../package.json';
+
+const CACHE_NAME = 'compress-to-url-cache-';
 const ASSETS_TTL = 60 * 60 * 24; // 24 hours
-const VERSION = "1.1.6";
+const VERSION = packageJson.dependencies['compress-to-url'];
 
 async function clearCache(path: string) {
   const cache = await caches.open(CACHE_NAME + VERSION);
@@ -42,8 +44,8 @@ export async function fetchAsset(path: string, isEditMode: boolean): Promise<Res
   } else if (path.endsWith('.html')) {
     mimeType = 'text/html';
     content = content
-      .replace(/src="dist\/index\.js"/, 'src="/dist/index.js"')
-      .replace(/href="styles\.css"/, 'href="/styles.css"');
+      .replace(/src="dist\/index\.js"/, `src="/dist/index.js?${VERSION}"`)
+      .replace(/href="styles\.css"/, `href="/styles.css?${VERSION}"`);
     console.log('Injecting SCRAPER_URL for edit mode');
     content = content.replace('</head>', `<script type='text/javascript'>window.SCRAPER_URL = '/scrape';</script></head>`);
   }
