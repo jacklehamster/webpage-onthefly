@@ -37,7 +37,9 @@ export async function fetchAsset(path: string, isEditMode: boolean, hostname: st
   let content = await response.text();
   let mimeType = 'text/plain';
 
-  if (path.endsWith('.js')) {
+  if (path.endsWith('.png')) {
+    mimeType = "image/png";
+  } else if (path.endsWith('.js')) {
     mimeType = 'application/javascript';
   } else if (path.endsWith('.css')) {
     mimeType = 'text/css';
@@ -46,7 +48,7 @@ export async function fetchAsset(path: string, isEditMode: boolean, hostname: st
     content = content
       .replace(/src="dist\/index\.js"/, `src="/dist/index.js?${VERSION}"`)
       .replace(/href="styles\.css"/, `href="/styles.css?${VERSION}"`)
-      .replaceAll(/"https:\/\/compress-to-url.dobuki.net"/g, `"${hostname}"`);
+      .replaceAll(/https:\/\/compress-to-url.dobuki.net/g, `${hostname}`);
     console.log(hostname);
     console.log('Injecting SCRAPER_URL for edit mode');
     content = content.replace('</head>', `<script type='text/javascript'>window.SCRAPER_URL = '/scrape';</script></head>`);

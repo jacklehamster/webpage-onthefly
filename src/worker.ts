@@ -74,6 +74,8 @@ export default {
       return fetchAsset('dist/index.js', edit, url.origin);
     } else if (pathname === '/styles.css') {
       return fetchAsset('styles.css', edit, url.origin);
+    } else if (pathname === '/example/img.png') {
+      return fetchAsset('/example/img.png', edit, url.origin);
     } else if (pathname === '/' || pathname === '/index.html') {
       return fetchAsset('index.html', edit, url.origin);
     }
